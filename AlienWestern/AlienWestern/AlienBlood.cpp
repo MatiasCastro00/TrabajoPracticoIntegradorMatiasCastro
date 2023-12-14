@@ -19,10 +19,9 @@ private:
     float _currentFade = 255;
     int _currentTime = 0;
 public:
-    bool IsAlie = false;
     AlienBlood(Vector2f position, const string& texturePath)
     {
-        _blood.setPosition(position);
+        //_blood.setPosition(position);
         _bloodTexture.loadFromFile(texturePath);
         _blood.setTexture(_bloodTexture);
         _startPosition = position;
@@ -47,6 +46,7 @@ public:
         {
             _doFade = false;
             _blood.setPosition({ 9999,9999 });
+            return;
         }
         float alphaSpeed = 255.0f / duration;
         _currentFade -= alphaSpeed;
@@ -54,6 +54,9 @@ public:
     }
     void SetAlpha(float fade)
     {
+        if (fade < 0)
+            fade = 0;
+        cout << fade << '\n';
         sf::Color color = _blood.getColor();
         color.a = static_cast<sf::Uint8>(fade);
         _blood.setColor(color);
